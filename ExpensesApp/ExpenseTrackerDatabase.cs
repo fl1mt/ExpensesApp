@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
-using System.Windows.Forms;
 
 public class ExpenseTrackerDatabase
 {
@@ -43,39 +42,33 @@ public class ExpenseTrackerDatabase
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
-
-            // Запрос на вставку новой записи
             string insertQuery = @"
             INSERT INTO Expenses (Name, Amount, Category, Date, Comment)
             VALUES (@Name, @Amount, @Category, @Date, @Comment);";
 
             using (SQLiteCommand command = new SQLiteCommand(insertQuery, connection))
             {
-                // Параметры
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Amount", amount);
                 command.Parameters.AddWithValue("@Category", category);
-                command.Parameters.AddWithValue("@Date", date.ToString("dd-MM-yyyy HH:mm:ss")); // Формат даты
+                command.Parameters.AddWithValue("@Date", date.ToString("dd-MM-yyyy HH:mm:ss"));
                 command.Parameters.AddWithValue("@Comment", comment);
-                // Выполняем
                 // коммит 123
                 command.ExecuteNonQuery();
             }
         }
     }
 
-    public DataTable GetDataGridWithFilters(string nameFilter, double? minAmountFilter, double? maxAmountFilter, DateTime? startDateFilter, DateTime? endDateFilter)
+    public DataTable GetDataTableWithFilters(string nameFilter, double? minAmountFilter, double? maxAmountFilter, 
+        DateTime? startDateFilter, DateTime? endDateFilter)
     {
         DataTable dataTable = new DataTable();
 
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
-
-            // SQL-запрос на выбор всех столбцов и строк из таблицы Expenses
             string selectAllQuery = "SELECT * FROM Expenses WHERE";
 
-            // Добавление условий фильтрации в SQL-запрос
             if (!string.IsNullOrWhiteSpace(nameFilter))
             {
                 selectAllQuery += " Name = @nameFilter AND";
@@ -151,31 +144,29 @@ public class ExpenseTrackerDatabase
         {
             connection.Open();
 
-            string query = "SELECT * FROM Expenses";
-
+            string query = "SELECT SUM(Amount) FROM Expenses WHERE Date >= @StartDate AND Date <= @EndDate";
+            DateTime endDate = DateTime.Now;
+            DateTime startDate = endDate.AddDays(-30);
+            Debug.WriteLine(startDate.ToString("dd-MM-yyyy HH:mm:ss"));
+            Debug.WriteLine(endDate.ToString("dd-MM-yyyy HH:mm:ss"));
             using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
+                command.Parameters.AddWithValue("@StartDate", startDate.ToString("dd-MM-yyyy HH:mm:ss"));
+                command.Parameters.AddWithValue("@EndDate", endDate.ToString("dd-MM-yyyy HH:mm:ss"));
 
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
                 {
-                    while (reader.Read())
-                    {
-                        DateTime local = Convert.ToDateTime(reader["Date"]);
-                        DateTime past = local.AddDays(30);
-
-                        DateTime now = DateTime.Now;
-                        // Формируем строку и добавляем в список
-                        if (now > local && now < past)
-                        {
-                            double expenseString = Convert.ToDouble(reader["Amount"]);
-                            totalExpenses += expenseString;
-                        }
-                    }
+                    Debug.WriteLine(result.ToString());
+                    // конвертируем
+                    totalExpenses = Convert.ToDouble(result);
                 }
             }
 
             connection.Close();
         }
+
         return totalExpenses;
     }
 
@@ -187,7 +178,7 @@ public class ExpenseTrackerDatabase
         {
             connection.Open();
 
-            // SQL-запрос для выбора последних N записей
+            // SQL запрос для выбора последних N записей
             string query = "SELECT Name, Amount FROM Expenses ORDER BY Id DESC LIMIT @N;";
 
             using (SQLiteCommand command = new SQLiteCommand(query, connection))
@@ -198,16 +189,13 @@ public class ExpenseTrackerDatabase
                 {
                     while (reader.Read())
                     {
-                        // Формируем строку и добавляем в список
                         string expenseString = $"{reader["Name"]} - {reader["Amount"]} руб.";
                         expensesList.Add(expenseString);
                     }
                 }
             }
-
             connection.Close();
         }
-
         return expensesList;
     }
 

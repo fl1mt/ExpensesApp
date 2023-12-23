@@ -55,7 +55,6 @@
             this.label2.Size = new System.Drawing.Size(107, 30);
             this.label2.TabIndex = 1;
             this.label2.Text = "10 340 Р";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -112,7 +111,6 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

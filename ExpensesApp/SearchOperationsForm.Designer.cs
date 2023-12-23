@@ -39,9 +39,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.filterDateStart = new System.Windows.Forms.DateTimePicker();
             this.filterDateEnd = new System.Windows.Forms.DateTimePicker();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -150,14 +150,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 355);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(600, 304);
-            this.dataGridView1.TabIndex = 16;
-            // 
             // filterDateStart
             // 
             this.filterDateStart.Location = new System.Drawing.Point(72, 231);
@@ -172,11 +164,19 @@
             this.filterDateEnd.Size = new System.Drawing.Size(200, 20);
             this.filterDateEnd.TabIndex = 18;
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 355);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(600, 304);
+            this.dataGridView1.TabIndex = 16;
+            // 
             // SearchOperationsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(721, 671);
+            this.ClientSize = new System.Drawing.Size(662, 671);
             this.Controls.Add(this.filterDateEnd);
             this.Controls.Add(this.filterDateStart);
             this.Controls.Add(this.dataGridView1);
@@ -212,8 +212,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DateTimePicker filterDateStart;
         private System.Windows.Forms.DateTimePicker filterDateEnd;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
