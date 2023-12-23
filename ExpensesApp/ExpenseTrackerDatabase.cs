@@ -11,7 +11,7 @@ public class ExpenseTrackerDatabase
 
     public ExpenseTrackerDatabase(string dbFilePath)
     {
-        // Путь к файлу базы данных SQLite
+        // 123
         connectionString = $"Data Source={dbFilePath};Version=3;";
     }
 
