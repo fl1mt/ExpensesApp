@@ -51,7 +51,7 @@ public class ExpenseTrackerDatabase
                 command.Parameters.AddWithValue("@Name", name);
                 command.Parameters.AddWithValue("@Amount", amount);
                 command.Parameters.AddWithValue("@Category", category);
-                command.Parameters.AddWithValue("@Date", date.ToString("dd-MM-yyyy HH:mm:ss"));
+                command.Parameters.AddWithValue("@Date", date.ToString("yyyy-MM-dd HH:mm:ss"));
                 command.Parameters.AddWithValue("@Comment", comment);
                 // коммит 123
                 command.ExecuteNonQuery();
@@ -114,8 +114,8 @@ public class ExpenseTrackerDatabase
                     command.Parameters.AddWithValue("@maxAmountFilter", maxAmountFilter.Value);
                 }
                 
-                command.Parameters.AddWithValue("@startDateFilter", startDateFilter.Value.ToString(("dd-MM-yyyy HH:mm:ss")));
-                command.Parameters.AddWithValue("@endDateFilter", endDateFilter.Value.ToString(("dd-MM-yyyy HH:mm:ss")));
+                command.Parameters.AddWithValue("@startDateFilter", startDateFilter.Value.ToString(("yyyy-MM-dd HH:mm:ss")));
+                command.Parameters.AddWithValue("@endDateFilter", endDateFilter.Value.ToString(("yyyy-MM-dd HH:mm:ss")));
 
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
@@ -147,12 +147,12 @@ public class ExpenseTrackerDatabase
             string query = "SELECT SUM(Amount) FROM Expenses WHERE Date >= @StartDate AND Date <= @EndDate";
             DateTime endDate = DateTime.Now;
             DateTime startDate = endDate.AddDays(-30);
-            Debug.WriteLine(startDate.ToString("dd-MM-yyyy HH:mm:ss"));
-            Debug.WriteLine(endDate.ToString("dd-MM-yyyy HH:mm:ss"));
+            Debug.WriteLine(startDate.ToString("yyyy-MM-dd HH:mm:ss"));
+            Debug.WriteLine(endDate.ToString("yyyy-MM-dd HH:mm:ss"));
             using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@StartDate", startDate.ToString("dd-MM-yyyy HH:mm:ss"));
-                command.Parameters.AddWithValue("@EndDate", endDate.ToString("dd-MM-yyyy HH:mm:ss"));
+                command.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                command.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd HH:mm:ss"));
 
                 object result = command.ExecuteScalar();
 

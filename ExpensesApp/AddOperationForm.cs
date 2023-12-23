@@ -5,7 +5,7 @@ namespace ExpensesApp
 {
     public partial class AddOperationForm : Form
     {
-        DateTime selectedDate;
+        DateTime selectedDate = DateTime.Now;
         ExpenseTrackerDatabase database;
         Form1 formMain;
         public AddOperationForm(ExpenseTrackerDatabase db, Form1 form)
@@ -18,7 +18,7 @@ namespace ExpensesApp
 
         private void buttonAddOpeartion_Click(object sender, EventArgs e)
         {
-            if (selectedDate != null && !string.IsNullOrEmpty(textBoxNameOp.Text) && !string.IsNullOrEmpty(textBoxCommentOp.Text) 
+            if (!string.IsNullOrEmpty(textBoxNameOp.Text) && !string.IsNullOrEmpty(textBoxCommentOp.Text) 
                 && !string.IsNullOrEmpty(textBoxSumOp.Text) && !string.IsNullOrEmpty(comboBox1.Text))
             {
                 if (!textBoxSumOp.Text.Any(char.IsLetter) && !textBoxSumOp.Text.Any(c => !char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c)))
